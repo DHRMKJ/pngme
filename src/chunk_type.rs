@@ -11,7 +11,7 @@ use crate::{Error, Result};
 #[derive(Debug, Clone, PartialEq, Eq)]
 
 pub struct ChunkType {
-    chunk_data: [u8;4],
+    data: [u8;4],
 }
 
 
@@ -19,33 +19,33 @@ pub struct ChunkType {
 impl ChunkType {
     /// Returns the raw bytes contained in this chunk
     pub fn bytes(&self) -> [u8; 4] {
-        self.chunk_data
+        self.data
     }
 
     /// Returns the property state of the first byte as described in the PNG spec
     pub fn is_critical(&self) -> bool {
-        self.chunk_data[0].is_ascii_uppercase()
+        self.data[0].is_ascii_uppercase()
     }
 
     /// Returns the property state of the second byte as described in the PNG spec
     pub fn is_public(&self) -> bool {
-        self.chunk_data[1].is_ascii_uppercase()
+        self.data[1].is_ascii_uppercase()
     }
 
     /// Returns the property state of the third byte as described in the PNG spec
     pub fn is_reserved_bit_valid(&self) -> bool {
-        self.chunk_data[2].is_ascii_uppercase()
+        self.data[2].is_ascii_uppercase()
     }
 
     /// Returns the property state of the fourth byte as described in the PNG spec
     pub fn is_safe_to_copy(&self) -> bool {
-        self.chunk_data[3].is_ascii_lowercase()
+        self.data[3].is_ascii_lowercase()
     }
 
     /// Returns true if the reserved byte is valid and all four bytes are represented by the characters A-Z or a-z.
     /// Note that this chunk type should always be valid as it is validated during construction.
     pub fn is_valid(&self) -> bool {
-        self.is_reserved_bit_valid() && self.chunk_data.into_iter().all(|x| x.is_ascii_alphabetic())
+        self.is_reserved_bit_valid() && self.data.into_iter().all(|x| x.is_ascii_alphabetic())
     }
 
     // Valid bytes are represented by the characters A-Z or a-z
@@ -59,7 +59,7 @@ impl TryFrom<[u8; 4]> for ChunkType {
     type Error = Error;
 
     fn try_from(bytes: [u8; 4]) -> Result<Self> {
-        let check_chunk_type = ChunkType { chunk_data: bytes};
+        let check_chunk_type = ChunkType { data: bytes};
         if check_chunk_type.is_valid()  {
             Ok(check_chunk_type)
         }else{
@@ -70,7 +70,7 @@ impl TryFrom<[u8; 4]> for ChunkType {
 
 impl fmt::Display for ChunkType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f,"{}",String::from_utf8(self.chunk_data.try_into().unwrap()).unwrap())
+        write!(f,"{}",String::from_utf8(self.data.try_into().unwrap()).unwrap())
     }
 }
 
@@ -82,7 +82,7 @@ impl FromStr for ChunkType {
              Err(Error::from("numbers are not allowed pal!"))
         }else {
         Ok(ChunkType {
-             chunk_data: s.as_bytes().try_into().unwrap()
+             data: s.as_bytes().try_into().unwrap()
         })
         }
     }
