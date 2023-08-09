@@ -11,7 +11,7 @@ use crate::{Error, Result};
 #[derive(Debug, Clone, PartialEq, Eq)]
 
 pub struct ChunkType {
-    data: [u8;4],
+    pub data: [u8;4],
 }
 
 
