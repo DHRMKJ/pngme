@@ -7,8 +7,14 @@ mod png;
 pub type Error = Box<dyn std::error::Error>;
 pub type Result<T> = std::result::Result<T, Error>;
 
+use clap::Parser;
 
 fn main() -> Result<()> {
     // todo!()
-    Ok(())
+    let cli = args::Cli::parse();
+
+    match cli.command {
+        args::Commands::Encode(args) => {return commands::encode(args)},
+        args::Commands::Decode(args) => {return commands::decode(args)}
+    };
 }
