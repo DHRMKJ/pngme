@@ -1,7 +1,7 @@
 
 #![allow(unused_variables)]
 
-use crc::{Crc, CRC_32_ISO_HDLC, CRC_32_CKSUM, CRC_32_AIXM, CRC_32_ISCSI};
+use crc::{Crc, CRC_32_ISO_HDLC};
 use std::convert::TryFrom;
 use std::fmt;
 use crate::chunk_type::ChunkType;
@@ -9,8 +9,8 @@ use crate::chunk_type::ChunkType;
 use crate::{Error, Result};
 #[derive(Debug)]
 pub struct Chunk {
-    chunk_type: ChunkType,
-    data: Vec<u8>
+    pub chunk_type: ChunkType,
+    pub data: Vec<u8>
 }
 #[allow(dead_code)]
 impl Chunk {
