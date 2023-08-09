@@ -1,28 +1,27 @@
 #![allow(unused_variables)]
-use std::ops::{Deref, Index};
-use std::str::FromStr;
 use std::{vec, fmt};
-
-use crate::chunk::{self, Chunk};
-use crate::chunk_type::ChunkType;
+use crate::chunk::Chunk;
 use crate::{Error, Result};
-struct Png {
-    data: Vec<Chunk>,
+
+#[derive(Debug)]
+
+pub struct Png {
+    pub data: Vec<Chunk>,
 }
 
 #[allow(dead_code)]
 impl Png {
     pub const STANDARD_HEADER: [u8; 8] = [137, 80, 78, 71, 13, 10, 26, 10];
 
-    fn from_chunks(chunks: Vec<Chunk>) -> Png {
+    pub fn from_chunks(chunks: Vec<Chunk>) -> Png {
         Png { data: chunks }
     }
 
-    fn append_chunk(&mut self, chunk: Chunk) {
+    pub fn append_chunk(&mut self, chunk: Chunk) {
         self.data.push(chunk);
     }
 
-    fn remove_chunk(&mut self, chunk_type: &str) -> Result<Chunk> {
+    pub fn remove_chunk(&mut self, chunk_type: &str) -> Result<Chunk> {
         if let Some(ind) = self
             .data
             .iter()
@@ -33,12 +32,13 @@ impl Png {
         Err(Error::from("element not found"))
     }
 
-    fn chunks(&self) -> &[Chunk] {
+    pub fn chunks(&self) -> &[Chunk] {
         &self.data[..]
     }
 
-    fn chunk_by_type(&self, chunk_type: &str) -> Option<&Chunk> {
+    pub fn chunk_by_type(&self, chunk_type: &str) -> Option<&Chunk> {
         let mut chunk_iter: std::slice::Iter<'_, Chunk> = self.data.iter();
+        println!("{:?}",chunk_type);
         if let Some(ind) =
             chunk_iter.position(|x| x.chunk_type().to_string() == chunk_type.to_string())
         {
@@ -47,7 +47,7 @@ impl Png {
         None
     }
 
-    fn as_bytes(&self) -> Vec<u8> {
+    pub fn as_bytes(&self) -> Vec<u8> {
         let mut whole_vector: Vec<u8> = vec![137, 80, 78, 71, 13, 10, 26, 10];
 
         for chunk in &self.data {
@@ -120,8 +120,6 @@ mod tests {
     }
 
     fn chunk_from_strings(chunk_type: &str, data: &str) -> Result<Chunk> {
-        use std::str::FromStr;
-
         let chunk_type = ChunkType::from_str(chunk_type)?;
         let data: Vec<u8> = data.bytes().collect();
         let chunk =Chunk::new(chunk_type, data);
