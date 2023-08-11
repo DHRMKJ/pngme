@@ -93,4 +93,4 @@ PNGme is released under the [MIT License](LICENSE).
 
 ---
 
-Feel free to reach out to us via GitHub Issues or by emailing support@pngme.com. We appreciate your interest and contributions to PNGme!
+Feel free to reach out to us via GitHub Issues or by emailing dhrmkjdv@gmail.com We appreciate your interest and contributions to PNGme!
