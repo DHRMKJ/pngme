@@ -2,7 +2,10 @@ use std::path::PathBuf;
 use clap::{Parser, Args, Subcommand};
 
 #[derive(Parser,Debug)]
-#[command(author, version, about, long_about=None)]
+#[command(name = "Png Encoder")]
+#[command(author = "Dharmik")]
+#[command(version = "1.0")]
+#[command(about, long_about = "a command line app to encode secret messages in a png, implmentation by https://github.com/Dh-rm-k")]
 pub struct Cli {
     #[command(subcommand)]
     pub command: Commands,
