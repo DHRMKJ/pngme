@@ -20,6 +20,7 @@
 - **Decoding**: Extract hidden messages from PNG images encoded with PNGme.
 - **Metadata Utilization**: Utilizes unused space in the PNG image's metadata to store hidden messages.
 - **Command-line Interface**: Easy-to-use command-line interface for encoding and decoding messages.
+- **Further Development**: If bigger files are zipped they can be encoded into pngs, if you implement it feel free to send a pr. 
 
 ## Getting Started
 
