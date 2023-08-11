@@ -1,4 +1,4 @@
-# PNGme Project - Rust
+# My implementation of the PNGme Project - Rust
 
 ![PNGme Logo](https://upload.wikimedia.org/wikipedia/commons/d/d5/Rust_programming_language_black_logo.svg)
 
